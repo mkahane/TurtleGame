@@ -11,19 +11,11 @@ SouthColors = ['g','g','g','g','s','g','o','r','r']
 SouthSides =  ['t','h','h','h','t','h','t','t','h']
 WestColors =  ['s','o','s','r','r','s','g','s','g']
 WestSides =   ['t','h','h','h','h','h','t','t','h']
-#NorthColors = ['r','0']
-#NorthSides =  ['t','t']
-#EastColors =  ['o','s']
-#EastSides  =  ['t','t']
-#SouthColors = ['g','g']
-#SouthSides =  ['h','h']
-#WestColors =  ['s','r']
-#WestSides =   ['h','h']
+
 class TurtlePart:
 	def __init__(self):
 		self.Color = "uninitialized"
 		self.Side = "uninitialized"
-
 
 
 class Card:
@@ -64,6 +56,8 @@ def createCards():
 		curCard.finalConfig = 0
 		AllCards.append(curCard)
 	return AllCards
+
+
 
 def validSoFar(Puzzle,nPlaced):
 	newCard = Puzzle[nPlaced -1]
