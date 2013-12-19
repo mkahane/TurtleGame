@@ -34,7 +34,9 @@ class Card:
 			self.East = oldNorth
 			self.South = oldEast
 			self.West = oldSouth
-			self.finalConfig++
+			(self.finalConfig) += 1
+			self.finalConfig %= 4
+		return self
 
 
 def createCards():
@@ -54,27 +56,49 @@ def createCards():
 		AllCards.append(curCard)
 	return AllCards
 
+def validSoFar(Puzzle,nPlaced):
+	newCard = Puzzle[nPlaced -1]
+	newRow = int((nPlaced-1)/3)
+	newCol = (nPlaced-1)%3
+	if(newCol != 0):
+		cardToWest = Puzzle[nPlaced -2]
+		if(cardToWest.East.Color != newCard.West.Color):
+			return False
+		if(cardToWest.East.Side == newCard.West.Side):
+			return False
+	if(newRow != 0):
+		cardToNorth = Puzzle[nPlaced-4]
+		if(cardToNorth.South.Color != newCard.North.Color):
+			return False
+		if(cardToNorth.South.Side == newCard.North.Side):
+			return False
+	return True
+
+
+
 def RecTryToSolve(nPlaced, curOrder, AllCards, Puzzle):
-	if(nPlaced == 9):
+	if(nPlaced == 2):
+		print 'Configurations ='
 		for Card in Puzzle:
 			print(Card.finalConfig)
-		return true
+		return True
 	else:
-		curCard = AllCards[curOrder[nPlaced]]
-		nPlaced ++
+		index = curOrder[nPlaced]-1
+		curCard = AllCards[index]
+		nPlaced += 1
 		for i in range (0,3):
 			turned = curCard.turnCW(i)
 			Puzzle.append(turned)
-			if(validSoFar(Puzzle)):
+			if(validSoFar(Puzzle, nPlaced)):
 				if(RecTryToSolve(nPlaced, curOrder, AllCards, Puzzle)):
-					return true
-			Puzzle.pop(nPlaced)
-		nPlaced --
-		return false
+					return True
+			Puzzle.pop(nPlaced-1)
+		nPlaced -= 1
+		return False
 
 
 def TryToSolve(curOrder, AllCards):
-	nplaced = 0
+	nPlaced = 0
 	Puzzle = []
 	return (RecTryToSolve(nPlaced, curOrder, AllCards, Puzzle))
 
@@ -82,9 +106,9 @@ def TryToSolve(curOrder, AllCards):
 if __name__=='__main__':
 	
 	n =  [0,1,2,3,4,5,6,7,8]
+	AllCards = createCards()
 	for curOrder in itertools.permutations(n):
-		AllCards = createCards()
 		if(TryToSolve(curOrder, AllCards)):
-			print curOrder
+			print 'Successful Order = ',curOrder
 	
 	
