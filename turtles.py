@@ -1,6 +1,8 @@
 import sys
 import itertools
 
+
+
 NorthColors = ['r','r','r','o','o','g','r','r','s']
 NorthSides =  ['h','t','t','t','h','t','h','h','t']
 EastColors =  ['o','s','o','s','g','o','s','o','o']
@@ -9,7 +11,14 @@ SouthColors = ['g','g','g','g','s','g','o','r','r']
 SouthSides =  ['t','h','h','h','t','h','t','t','h']
 WestColors =  ['s','o','s','r','r','s','g','s','g']
 WestSides =   ['t','h','h','h','h','h','t','t','h']
-
+#NorthColors = ['r','0']
+#NorthSides =  ['t','t']
+#EastColors =  ['o','s']
+#EastSides  =  ['t','t']
+#SouthColors = ['g','g']
+#SouthSides =  ['h','h']
+#WestColors =  ['s','r']
+#WestSides =   ['h','h']
 class TurtlePart:
 	def __init__(self):
 		self.Color = "uninitialized"
@@ -42,7 +51,7 @@ class Card:
 def createCards():
 	nCards = 9
 	AllCards = []
-	for i in range (0,nCards-1):
+	for i in range (0,nCards):
 		curCard = Card();
 		curCard.North.Color = NorthColors[i]
 		curCard.North.Side = NorthSides[i]
@@ -77,13 +86,13 @@ def validSoFar(Puzzle,nPlaced):
 
 
 def RecTryToSolve(nPlaced, curOrder, AllCards, Puzzle):
-	if(nPlaced == 2):
+	if(nPlaced == 9):
 		print 'Configurations ='
 		for Card in Puzzle:
 			print(Card.finalConfig)
 		return True
 	else:
-		index = curOrder[nPlaced]-1
+		index = curOrder[nPlaced]
 		curCard = AllCards[index]
 		nPlaced += 1
 		for i in range (0,3):
@@ -106,7 +115,9 @@ def TryToSolve(curOrder, AllCards):
 if __name__=='__main__':
 	
 	n =  [0,1,2,3,4,5,6,7,8]
+
 	AllCards = createCards()
+	print('length = ',len(AllCards))
 	for curOrder in itertools.permutations(n):
 		if(TryToSolve(curOrder, AllCards)):
 			print 'Successful Order = ',curOrder
