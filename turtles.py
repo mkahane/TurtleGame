@@ -21,10 +21,10 @@ class Card:
 		self.South = TurtlePart()
 		self.West = TurtlePart()
 
-def createCards:
+def createCards():
 	nCards = 9
 	AllCards = []
-	for i in range nCards:
+	for i in range (0,nCards-1):
 		curCard = Card();
 		curCard.North.Color = NorthColors[i]
 		curCard.North.Side = NorthSides[i]
@@ -34,7 +34,11 @@ def createCards:
 		curCard.South.Side = SouthSides[i]
 		curCard.West.Color = WestColors[i]
 		curCard.West.Side = WestSides[i]
+		AllCards.append(curCard)
+	return AllCards
 
 if __name__=='__main__':
 	AllCards = createCards()
+	print AllCards[0].North.Side
+	print AllCards[0].North.Color
 	
